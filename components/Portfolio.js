@@ -7,34 +7,36 @@ import Coin from "./Coin";
 const Portfolio = () => {
   return (
     <Wrapper>
-      <PortfolioTable>
-        <TableItem>
-          <Title>Your Assets</Title>
-        </TableItem>
-        <Divider />
-        <Table>
+      <Content>
+        <PortfolioTable>
           <TableItem>
-            <TableRow>
-              <div style={{ flex: 3 }}>Name</div>
-              <div style={{ flex: 2 }}>Balance</div>
-              <div style={{ flex: 1 }}>Price</div>
-              <div style={{ flex: 1 }}>Allocation</div>
-              <div style={{ flex: 0 }}>
-                <BsThreeDotsVertical />
-              </div>
-            </TableRow>
+            <Title>Your Assets</Title>
           </TableItem>
           <Divider />
-          <div>
-            {coins.map((coin) => (
-              <div>
-                <Coin coin={coin} />
-                <Divider />
-              </div>
-            ))}
-          </div>
-        </Table>
-      </PortfolioTable>
+          <Table>
+            <TableItem>
+              <TableRow>
+                <div style={{ flex: 3 }}>Name</div>
+                <div style={{ flex: 2 }}>Balance</div>
+                <div style={{ flex: 1 }}>Price</div>
+                <div style={{ flex: 1 }}>Allocation</div>
+                <div style={{ flex: 0 }}>
+                  <BsThreeDotsVertical />
+                </div>
+              </TableRow>
+            </TableItem>
+            <Divider />
+            <div>
+              {coins.map((coin) => (
+                <div key={coin.name}>
+                  <Coin coin={coin} />
+                  <Divider />
+                </div>
+              ))}
+            </div>
+          </Table>
+        </PortfolioTable>
+      </Content>
     </Wrapper>
   );
 };
@@ -45,12 +47,13 @@ const Wrapper = styled.div`
   flex: 1;
   display: flex;
   justify-content: center;
+  height: 100%;
 `;
 
 const Content = styled.div`
-    width: 100%
-    max-width: 1000px;
-    padding: 2rem 1rem;
+  width: 100%;
+  max-width: 1000px;
+  padding: 2rem 1rem;
 `;
 
 const PortfolioTable = styled.div`
@@ -58,11 +61,11 @@ const PortfolioTable = styled.div`
   border: 1px solid #282b2f;
 `;
 
-const Table = styled.table`
+const Table = styled.div`
   width: 100%;
 `;
 
-const TableRow = styled.tr`
+const TableRow = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;

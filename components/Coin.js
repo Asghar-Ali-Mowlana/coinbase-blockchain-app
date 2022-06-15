@@ -19,15 +19,17 @@ const Coin = ({ coin }) => {
         </div>
         <div style={{ flex: 2 }}>
           <Primary>
-            {"$"} {coin.balanceUsd}
+            {"$"}
+            {coin.balanceUsd}
           </Primary>
           <Secondary>
             {coin.balanceCoin} {coin.sign}
           </Secondary>
         </div>
-        <div>
+        <div style={{ flex: 1 }}>
           <Primary>
-            {"$"} {coin.priceUsd}
+            {"$"}
+            {coin.priceUsd}
           </Primary>
           <div style={{ color: coin.change < 0 ? "#f0616d" : "#26ad75" }}>
             {coin.change > 0 && "+"}
