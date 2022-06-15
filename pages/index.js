@@ -20,21 +20,6 @@ export default function Home() {
         </WalletConnect>
       )}
     </Wrapper>
-    /*<Wrapper>
-      {address ? (
-        <Dashboard address={address} />
-      ) : (
-        <WalletConnect>
-          <Button onClick={() => connectWallet("injected")}>
-            Connect Wallet
-          </Button>
-          <Details>
-            You need Chrome to be
-            <br /> able to run this app.
-          </Details>
-        </WalletConnect>
-      )}
-    </Wrapper>*/
   );
 }
 
