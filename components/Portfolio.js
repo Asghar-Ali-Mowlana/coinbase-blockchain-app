@@ -41,7 +41,6 @@ const Portfolio = ({ walletAddress, sanityTokens, thirdWebTokens }) => {
               <BalanceValue>
                 {"$"}
                 {walletBalance.toLocaleString()}
-                {/* 46,000 */}
               </BalanceValue>
             </Balance>
           </div>
