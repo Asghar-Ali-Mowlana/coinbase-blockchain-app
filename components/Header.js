@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Header = ({walletAddress, connectWallet}) => {
+const Header = ({walletAddress, connectWallet, sanityTokens, thirdWebTokens}) => {
   return (
     <Wrapper>
       <Title>Assets</Title>
