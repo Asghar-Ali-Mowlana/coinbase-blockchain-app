@@ -26,7 +26,9 @@ const Portfolio = ({ walletAddress, sanityTokens, thirdWebTokens }) => {
       );
 
       setWalletBalance(totalBalance.reduce((acc, curr) => acc + curr, 0));
-      console.log(`Total Balance Is ${walletBalance}`);
+      console.log(
+        `Total Balance Is ${totalBalance.reduce((acc, curr) => acc + curr, 0)}`
+      );
     };
     calculateTotalBalance();
   }, [sanityTokens, thirdWebTokens]);

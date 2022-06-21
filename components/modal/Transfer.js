@@ -1,10 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FaWallet } from "react-icons/fa";
+import imageUrlBuilder from "@sanity/image-url";
+import { client } from "../../lib/sanity";
 
-const Transfer = () => {
+const Transfer = ({
+  selectedToken,
+  setAction,
+  thirdWebTokens,
+  walletAddress,
+}) => {
   const [amount, setAmount] = useState();
-  const [recipient, setRecipient] = useState();
+  const [recipient, setRecipient] = useState("");
+  const [imageUrl, setImageUrl] = useState(null);
+  const [activeThirdWebToken, setActiveThirdWebToken] = useState();
+  const [balance, setBalance] = useState("Fetching...");
+
+  useEffect(() => {
+    const activeToken = thirdWebTokens.find(
+      (token) =>
+        token.contractWrapper.readContract.address ===
+        selectedToken.contractAddress
+    );
+    setActiveThirdWebToken(activeToken);
+  }, [thirdWebTokens, selectedToken]);
+
+  useEffect(() => {
+    const url = imageUrlBuilder(client).image(selectedToken.logo).url();
+    setImageUrl(url);
+  }, [selectedToken]);
+
+  useEffect(() => {
+    const getBalance = async () => {
+      const balance = await activeThirdWebToken.balanceOf(walletAddress);
+      setBalance(balance.displayValue);
+    };
+
+    if (activeThirdWebToken) {
+      getBalance();
+    }
+  }, [activeThirdWebToken]);
 
   return (
     <Wrapper>
@@ -39,12 +74,9 @@ const Transfer = () => {
           <FieldName>Pay with</FieldName>
           <CoinSelectList>
             <Icon>
-              <img
-                src="https://w0.peakpx.com/wallpaper/665/51/HD-wallpaper-twin-blade-swordsman-beater-kazuto-guy-elucidator-kazuto-kirigaya-kirito-dark-repulser-blade-anime-weapon-sword-black-hair-male-kirigaya-kazuto-black-sword-art-online-kirigaya-short.jpg"
-                alt=""
-              />
+              <img src={imageUrl} alt="" />
             </Icon>
-            <CoinName>Ethereum</CoinName>
+            <CoinName>{selectedToken.name}</CoinName>
           </CoinSelectList>
         </Row>
       </TransferForm>
@@ -52,8 +84,8 @@ const Transfer = () => {
         <Continue>Continue</Continue>
       </Row>
       <Row>
-        <BalanceTitle>ETH Balance</BalanceTitle>
-        <Balance>1.2 ETH</Balance>
+        <BalanceTitle>{selectedToken.symbol} Balance</BalanceTitle>
+        <Balance>{balance} {selectedToken.symbol}</Balance>
       </Row>
     </Wrapper>
   );
@@ -117,7 +149,7 @@ const Warning = styled.div`
 `;
 
 const Divider = styled.div`
-  border-bottem: 1px solid #282b2f;
+  border-bottom: 1px solid #282b2f;
 `;
 
 const Row = styled.div`

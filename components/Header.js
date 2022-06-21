@@ -9,9 +9,9 @@ Modal.setAppElement("#__next");
 
 const Header = ({
   walletAddress,
-  connectWallet,
   sanityTokens,
   thirdWebTokens,
+  connectWallet,
 }) => {
   const router = useRouter();
 
@@ -53,7 +53,11 @@ const Header = ({
         onRequestClose={() => router.push("/")}
         style={customStyles}
       >
-        <TransferModal />
+        <TransferModal
+          sanityTokens={sanityTokens}
+          thirdWebTokens={thirdWebTokens}
+          walletAddress={walletAddress}
+        />
       </Modal>
     </Wrapper>
   );
