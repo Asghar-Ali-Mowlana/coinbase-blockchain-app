@@ -41,6 +41,20 @@ const Transfer = ({
     }
   }, [activeThirdWebToken]);
 
+  const sendCrypto = async (amount, recipient) => {
+    console.log("Sending crypto...");
+    if (activeThirdWebToken && amount && recipient) {
+      const tx = await activeThirdWebToken.transfer(
+        recipient,
+        amount.toString()
+      );
+      console.log(tx);
+      setAction("transferred");
+    } else {
+      console.error("Missing data");
+    }
+  };
+
   return (
     <Wrapper>
       <Amount>
@@ -51,7 +65,7 @@ const Transfer = ({
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
           />
-          <span>ETH</span>
+          <span>{selectedToken.symbol}</span>
         </FlexInputContainer>
         <Warning style={{ color: amount && "#0a0b0d" }}>
           Amount is a required field
@@ -81,11 +95,15 @@ const Transfer = ({
         </Row>
       </TransferForm>
       <Row>
-        <Continue>Continue</Continue>
+        <Continue onClick={() => sendCrypto(amount, recipient)}>
+          Continue
+        </Continue>
       </Row>
       <Row>
         <BalanceTitle>{selectedToken.symbol} Balance</BalanceTitle>
-        <Balance>{balance} {selectedToken.symbol}</Balance>
+        <Balance>
+          {balance} {selectedToken.symbol}
+        </Balance>
       </Row>
     </Wrapper>
   );
