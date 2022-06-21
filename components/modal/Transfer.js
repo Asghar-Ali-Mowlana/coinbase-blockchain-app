@@ -44,6 +44,7 @@ const Transfer = ({
   const sendCrypto = async (amount, recipient) => {
     console.log("Sending crypto...");
     if (activeThirdWebToken && amount && recipient) {
+      setAction('transferring')
       const tx = await activeThirdWebToken.transfer(
         recipient,
         amount.toString()
